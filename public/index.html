@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="theme-color" content="#000000" />
-    <!--
+    <head>
+        <meta charset="utf-8" />
+        <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <meta name="theme-color" content="#000000" />
+        <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+        <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -22,12 +22,321 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
+        <title>React App</title>
+        <style>
+            /* Flipping cards */
+            * {
+                margin: 0;
+                padding: 0;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+            .main {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .paper {
+                margin: 10vh auto;
+                min-width: 20vw;
+                max-width: 60vh;
+                min-height: 20vh;
+                border-radius: 4px;
+                box-shadow: 0 15px 35px rgba(50, 50, 90, 0.1),
+                    0 5px 15px rgba(0, 0, 0, 0.07);
+                transition: 0.6s ease;
+                background: white;
+                text-align: center;
+            }
+
+            .paper:hover {
+                box-shadow: 0 18px 35px rgba(50, 50, 90, 0.1),
+                    0 8px 15px rgba(0, 0, 0, 0.07);
+                transform: translateY(-1px);
+            }
+
+            img {
+                max-width: 100%;
+                max-height: 100%;
+            }
+
+            .poster {
+                border-radius: 4px 4px 0 0;
+                margin-bottom: 2vh;
+                background-color: #7c66ff;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+                color: #303336;
+                letter-spacing: 1px;
+                margin: 2vh 4vw;
+                font-family: monospace;
+            }
+
+            hr {
+                margin-top: 3vh;
+                margin-bottom: 3vh;
+                border: 0;
+                border-bottom: 1px solid #e6e9ec;
+            }
+
+            p {
+                margin: 2vh 5vw;
+                min-height: 2.8rem;
+                text-align: center;
+                padding-bottom: 1vh;
+                color: #a0a6ab;
+                font-family: 'Playfair Display', serif;
+                font-weight: 400;
+                font-size: 0.9rem;
+                line-height: 1.25rem;
+            }
+
+            .btn,
+            a.btn {
+                display: inline-block;
+                text-transform: uppercase;
+                cursor: pointer;
+                text-decoration: none;
+                line-height: 20px;
+                border-radius: 4px;
+                padding: 1vh 2vh;
+                letter-spacing: 0.02rem;
+                background: #664ef7;
+                color: white;
+                font-family: 'Open Sans', sans-serif;
+                font-size: 0.8rem;
+                user-select: none;
+                box-shadow: 0 0px 0px rgba(48, 51, 54, 0.1),
+                    0 0px 0px rgba(0, 0, 0, 0);
+            }
+
+            .btn,
+            a.btn:hover {
+                background: #7c66ff;
+                box-shadow: 0 7px 14px rgba(48, 51, 54, 0.1),
+                    0 3px 6px rgba(0, 0, 0, 0.08);
+                transform: translateY(-1px);
+            }
+
+            .btn,
+            a.btn:active {
+                box-shadow: 0 4px 6px rgba(48, 51, 54, 0.1),
+                    0 1px 3px rgba(0, 0, 0, 0.12);
+                transform: translateY(1px);
+            }
+            .space {
+                height: 4vh;
+            }
+            /* Style Code: Purple Grid  */
+            /* @import 'https://fonts.googleapis.com/css?family=Bitter|Bungee+Shade'; */
+            .support {
+                align-items: center;
+                background: tomato;
+                color: #fff;
+                display: flex;
+                font-size: 0.9rem;
+                padding: 0 10px 0 0;
+                position: fixed;
+                right: 0;
+                top: 0;
+                width: auto;
+                z-index: 100;
+            }
+            .support a {
+                color: #fff;
+                padding: 10px 0;
+                text-decoration: none;
+            }
+            @supports (display: grid) {
+                .support {
+                    background: #058a6e;
+                    right: 40px;
+                    -webkit-transform: translateX(100%);
+                    transform: translateX(100%);
+                    transition: right 0.5s ease-in-out,
+                        -webkit-transform 0.5s ease-in-out;
+                    transition: right 0.5s ease-in-out,
+                        transform 0.5s ease-in-out;
+                    transition: right 0.5s ease-in-out,
+                        transform 0.5s ease-in-out,
+                        -webkit-transform 0.5s ease-in-out;
+                }
+                .support:hover {
+                    right: 0;
+                    -webkit-transform: translateX(0%);
+                    transform: translateX(0%);
+                }
+            }
+
+            .support svg {
+                fill: #ffffff;
+                height: 30px;
+                margin-right: 5px;
+                padding: 5px;
+                width: 30px;
+            }
+
+            .unsupported {
+                display: block;
+            }
+            @supports (display: grid) {
+                .unsupported {
+                    display: none;
+                }
+            }
+
+            .supported {
+                display: none;
+            }
+            @supports (display: grid) {
+                .supported {
+                    display: block;
+                }
+            }
+
+            .diamond {
+                align-content: center;
+                box-shadow: 1px 1px 8px rgba(55, 55, 55, 0.1);
+                background-color: rgba(129, 15, 120, 0.5);
+                display: flex;
+                height: auto;
+                left: 0;
+                line-height: 1;
+                justify-content: center;
+                position: absolute;
+                text-align: center;
+                top: 0;
+                width: auto;
+                z-index: 1;
+            }
+
+            div {
+                color: #fff;
+                /* padding: 2rem; */
+            }
+
+            h2 {
+                /* font-size: 3.2rem; */
+                /* line-height: 1; */
+                /* padding: 4rem 2rem; */
+                margin: 0;
+                -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+            }
+
+            .demo-number {
+                display: block;
+                color: black;
+                font-family: 'Bungee Shade', cursive;
+            }
+
+            .db {
+                font-size: 5.5rem;
+                padding: 4rem 2rem;
+            }
+            .cfs {
+                font-size: 5.5rem;
+                padding: 4rem 2rem;
+            }
+
+            .token {
+                font-size: 4rem;
+                padding: 4.9rem 2rem;
+            }
+
+            .chassis {
+                font-size: 2.7rem;
+                padding: 4.1rem 0.2rem;
+            }
+        </style>
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <!-- <div id="app"></div> -->
+
+        <header class="diamond">
+            <h2>
+                demo
+                <span class="demo-number">CFS</span>
+            </h2>
+        </header>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="main">
+            <div class="paper">
+                <div class="poster">
+                    <h2 class="db">
+                        <span class="demo-number">DB</span>
+                    </h2>
+                </div>
+                <h3>Database files</h3>
+                <hr />
+                <p>
+                    4 new database files available. Please download new
+                    databases.
+                </p>
+                <a class="btn">Update</a>
+                <div class="space"></div>
+            </div>
+            <div class="paper">
+                <div class="poster">
+                    <h2 class="cfs">
+                        <span class="demo-number">CRG</span>
+                    </h2>
+                </div>
+                <h3>CRG files</h3>
+                <hr />
+                <p>
+                    6 new CRG files available. Please download new CRG files.
+                </p>
+                <a class="btn">Update</a>
+                <div class="space"></div>
+            </div>
+            <div class="paper">
+                <div class="poster">
+                    <h2 class="token">
+                        <span class="demo-number">Token</span>
+                    </h2>
+                </div>
+                <h3>Token Authorization</h3>
+                <hr />
+                <p>
+                    Your Token is invalid. Log back into the application.
+                </p>
+                <a class="btn">Update</a>
+                <div class="space"></div>
+            </div>
+            <div class="paper">
+                <div class="poster">
+                    <h2 class="chassis">
+                        <span class="demo-number">Chassis Tuner</span>
+                    </h2>
+                </div>
+                <h3>Chassis Tuner Application</h3>
+                <hr />
+                <p>
+                    Link towards Chassis Tuner Application.
+                </p>
+                <a class="btn">Chassis Tuner</a>
+                <div class="space"></div>
+            </div>
+        </div>
+        <div id="root"></div>
+        <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -36,6 +345,5 @@
 
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+    --></body>
 </html>
